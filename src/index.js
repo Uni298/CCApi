@@ -96,8 +96,18 @@ export default {
     if (!Array.isArray(body.board) || body.board.length !== 40) {
       return json({ error: 'board must be 40 rows' }, 400);
     }
+    if (!body.board.every((row) => Array.isArray(row) && row.length === 10)) {
+      return json({ error: 'each board row must have exactly 10 columns' }, 400);
+    }
+    const VALID_CELLS = new Set([null, 'I', 'O', 'T', 'L', 'J', 'S', 'Z']);
+    if (!body.board.every((row) => row.every((cell) => VALID_CELLS.has(cell)))) {
+      return json({ error: 'board cells must be null or one of I,O,T,L,J,S,Z' }, 400);
+    }
     if (!Array.isArray(body.queue) || body.queue.length === 0) {
       return json({ error: 'queue required' }, 400);
+    }
+    if (!body.queue.every((p) => VALID_CELLS.has(p) && p !== null)) {
+      return json({ error: 'queue must contain only I,O,T,L,J,S,Z' }, 400);
     }
 
     const run = chain.then(() => runSuggest(body));

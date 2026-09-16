@@ -1,0 +1,9 @@
+name = "cc2-suggest-api"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+# glue内に process / require への参照が残っているためNode互換フラグを有効化しておく
+# (実行パス上は基本呼ばれないが、保険として)
+compatibility_flags = ["nodejs_compat"]
+
+# 認証トークンは秘密情報なのでリポジトリに書かず、以下のコマンドで登録する:
+#   wrangler secret put CC_API_TOKEN

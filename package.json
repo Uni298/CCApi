@@ -1,0 +1,14 @@
+{
+  "name": "cc2-suggest-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cold Clear 2 (wasm) の着手候補を返す Cloudflare Worker API",
+  "scripts": {
+    "extract-glue": "node scripts/extract-glue.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}

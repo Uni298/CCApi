@@ -2,9 +2,16 @@
 import cc2Module from "./cc2.wasm";
 
 const cc2Messages = [];
+// 保持するメッセージ種別を限定する。
+// suggestion 以外（__worker_ready, __worker_error, 内部ログ等）を無制限に
+// 溜め込むと isolate が長生きするほどメモリを圧迫するため、ここで捨てる。
+const KEEP_MESSAGE_TYPES = new Set(['suggestion']);
 
 function __emit(msg) {
-  cc2Messages.push(msg);
+  if (msg && KEEP_MESSAGE_TYPES.has(msg.type)) {
+    cc2Messages.push(msg);
+  }
+  // ログ用途などで msg 自体を見たい場合はここで console.log(msg) する
 }
 
 
